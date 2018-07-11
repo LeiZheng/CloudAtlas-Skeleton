@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import HomeLayout from '../components/HomeLayout'
 import FetchData from '../components/FetchData';
 import Counter from '../components/Counter';
-const MainAppPage = ({ match, state }) => (
+const MainAppPage = ({ match }) => (
     <HomeLayout>
         <Route
             exact
@@ -12,11 +12,11 @@ const MainAppPage = ({ match, state }) => (
             component={Home}
         />
         <Route path={`/counter`}  component={Counter} />
-        <Route path={`/fetchdata`} component={FetchData} />
+        <Route path={`/fetchdata/:startDateIndex`} component={FetchData} />
     </HomeLayout>
 );
 
-const Home = (state, props) => (
+const Home = () => (
     <div>
         <h1>Hello, world!</h1>
         <p>Welcome to your new single-page application, built with:</p>
@@ -35,12 +35,5 @@ const Home = (state, props) => (
     </div>
  );
 
-function mapStateToProps(state) {
-   
-    return {
-        state
-    };
-}
 
-
-export default connect(mapStateToProps)(MainAppPage);
+export default connect()(MainAppPage);

@@ -5,15 +5,15 @@ import { registration } from './registration.reducer';
 import { users } from './users.reducer';
 import { alert } from './alert.reducer';
 import { reducer as counter } from './counter.reducer'
-import { reducer as weatherForcasts } from './weatherForecasts.reducer'
+import { reducer as weatherForecasts } from './weatherForecasts.reducer'
 
-const rootReducer = combineReducers({
+const rootReducers = {
     authentication,
     registration,
     users,
     alert,
     counter,
-    weatherForcasts,
-});
+    weatherForecasts,
+};
 
-export default rootReducer;
+export default rootReducers;

@@ -2,7 +2,7 @@
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
-import combinedRoutes from '../reducers'
+import rootReducers from '../reducers'
 
 export default function configureStore(history, initialState) {
 
@@ -20,7 +20,7 @@ export default function configureStore(history, initialState) {
     }
 
     const rootReducer = combineReducers({
-        combinedRoutes,
+        ...rootReducers,
         routing: routerReducer
     });
 

@@ -17,6 +17,6 @@ const Counter = props => (
 );
 
 export default connect(
-    state => state.combinedRoutes.counter,
+    state => state.counter,
     dispatch => bindActionCreators(actionCreators, dispatch)
 )(Counter);
