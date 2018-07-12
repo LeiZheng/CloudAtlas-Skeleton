@@ -12,7 +12,7 @@ const MainAppPage = ({ match }) => (
             component={Home}
         />
         <Route path={`/counter`}  component={Counter} />
-        <Route path={`/fetchdata/:startDateIndex`} component={FetchData} />
+        <Route path={`/fetchdata/:startDateIndex?`} component={FetchData} />
     </HomeLayout>
 );
 
