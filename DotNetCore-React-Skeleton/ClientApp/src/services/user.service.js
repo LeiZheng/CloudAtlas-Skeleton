@@ -1,6 +1,6 @@
 import { config } from '../config';
 import { authHeader } from '../helpers';
-
+import axios from 'axios'
 export const userService = {
     login,
     logout,
@@ -11,7 +11,22 @@ export const userService = {
     delete: _delete
 };
 
+//default to login if 401 error.
+axios.interceptors.response.use(response => {
+    return response;
+}, error => {
+    if (error.response.status === 401) {
+        logout();
+        window.location.reload(true);
+    }
+    return error;
+});
+
 function login(username, password) {
+    console.log('log.username', username);
+    console.log('log.password', password);
+    return axios.post(`${config.apiUrl}/users/authenticate`, { username, password }).then(resp => resp.data);
+    /*
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -29,6 +44,7 @@ function login(username, password) {
 
             return user;
         });
+    */
 }
 
 function logout() {
@@ -41,8 +57,8 @@ function getAll() {
         method: 'GET',
         headers: authHeader()
     };
-
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+    return axios.get(`${config.apiUrl}/users`, requestOptions).then(resp => resp.data);
+    //return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
 }
 
 function getById(id) {
@@ -50,8 +66,8 @@ function getById(id) {
         method: 'GET',
         headers: authHeader()
     };
-
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return axios.get(`${config.apiUrl}/users/${id}`, requestOptions).then(resp => resp.data);
+    //return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
 function register(user) {
@@ -61,7 +77,8 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
+    return axios.post(`${config.apiUrl}/users/register`, user, requestOptions).then(resp =>  resp.data);
+    //return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
@@ -70,8 +87,9 @@ function update(user) {
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
+    return axios.put(`${config.apiUrl}/users/${user.id}`, user, requestOptions);
 
-    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);;
+   // return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);;
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -81,7 +99,8 @@ function _delete(id) {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return axios.delete(`${config.apiUrl}/users/${id}`, requestOptions);
+    //return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

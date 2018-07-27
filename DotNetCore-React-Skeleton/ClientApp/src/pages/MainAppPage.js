@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import HomeLayout from '../components/HomeLayout'
 import FetchData from '../components/FetchData';
 import Counter from '../components/Counter';
+import { UsersPage } from './UsersPage';
 const MainAppPage = ({ match }) => (
     <HomeLayout>
         <Route
@@ -13,6 +14,7 @@ const MainAppPage = ({ match }) => (
         />
         <Route path={`/counter`}  component={Counter} />
         <Route path={`/fetchdata/:startDateIndex?`} component={FetchData} />
+        <Route path='/users' component={UsersPage}/>
     </HomeLayout>
 );
 

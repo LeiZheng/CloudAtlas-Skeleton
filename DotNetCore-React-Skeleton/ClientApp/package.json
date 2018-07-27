@@ -16,7 +16,9 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "axios": "^0.18.0",
+    "axios-mock-adapter": "^1.15.0"
   },
   "scripts": {
     "start": "rimraf ./build && react-scripts start",

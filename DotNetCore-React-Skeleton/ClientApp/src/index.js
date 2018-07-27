@@ -10,20 +10,20 @@ import configureStore from './store/configureStore';
 import App from './App';
 
 import registerServiceWorker from './registerServiceWorker';
-import { configureFakeBackend, history } from './helpers';
+import { configureMockBackend, history, configureFakeBackend } from './helpers';
 
 // Create browser history to use in the Redux store
 /*
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const history = createBrowserHistory({ basename: baseUrl });
 */
-
 // Get the application-wide store instance, prepopulating with state from the server where available.
+
 const initialState = window.initialReduxState;
 const store = configureStore(history, initialState);
-
 const rootElement = document.getElementById('root');
 
+configureMockBackend();
 configureFakeBackend();
 ReactDOM.render(
     <Provider store={store}>

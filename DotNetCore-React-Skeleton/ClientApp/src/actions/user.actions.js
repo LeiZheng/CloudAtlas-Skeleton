@@ -2,6 +2,7 @@ import { userConstants } from '../constants';
 import { userService } from '../services';
 import { alertActions } from './';
 import { history } from '../helpers';
+import axios from 'axios';
 
 export const userActions = {
     login,
@@ -14,7 +15,10 @@ export const userActions = {
 function login(username, password) {
     return dispatch => {
         dispatch(request({ username }));
-
+        //must assign the dispatch to local var to fix reference issue.
+       
+       
+        /*
         userService.login(username, password)
             .then(
                 user => { 
@@ -26,6 +30,22 @@ function login(username, password) {
                     dispatch(alertActions.error(error.toString()));
                 }
             );
+          */  
+        console.log('login.action.username',username);
+        userService.login( username, password )
+            .then(user => {
+                console.log('login.then', user);
+                localStorage.setItem('user', JSON.stringify(user));                
+                dispatch(success(user));
+                history.push('/');
+               
+            })
+            .catch(function (error) {
+                console.log('login.error', error);
+                dispatch(failure(error.toString()));
+                dispatch(alertActions.error(error.toString()));
+            });
+            
     };
 
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
@@ -42,17 +62,16 @@ function register(user) {
     return dispatch => {
         dispatch(request(user));
         userService.register(user)
-            .then(
-                user => { 
-                    dispatch(success());
-                    history.push('/login');
-                    dispatch(alertActions.success('Registration successful'));
-                },
-                error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
+            .then(user => {
+                dispatch(success());
+                history.push('/login');
+                dispatch(alertActions.success('Registration successful'));
+            })
+            .catch(error => {
+                dispatch(failure(error.toString()));
+                dispatch(alertActions.error(error.toString()));
+            });
+
     };
 
     function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
@@ -65,9 +84,12 @@ function getAll() {
         dispatch(request());
 
         userService.getAll()
-            .then(
-                users => dispatch(success(users)),
-                error => dispatch(failure(error.toString()))
+            .then(users => {
+                console.log('users',users);
+                dispatch(success(users));
+            })
+            .catch(error =>
+                dispatch(failure(error.toString()))
             );
     };
 
@@ -82,9 +104,11 @@ function _delete(id) {
         dispatch(request(id));
 
         userService.delete(id)
-            .then(
-                user => dispatch(success(id)),
-                error => dispatch(failure(id, error.toString()))
+            .then(user =>
+                dispatch(success(id))
+            )
+            .catch(error =>
+                dispatch(failure(id, error.toString()))
             );
     };
 
