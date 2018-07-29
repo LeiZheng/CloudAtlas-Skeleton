@@ -1,9 +1,10 @@
-import { authentication } from './authentication.reducer';
-import { registration } from './registration.reducer';
-import { users } from './users.reducer';
-import { alert } from './alert.reducer';
-import { reducer as counter } from './counter.reducer'
-import { reducer as weatherForecasts } from './weatherForecasts.reducer'
+import { reducer as authentication } from './authentication';
+import { reducer as registration } from './registration';
+import { reducer as users } from './users';
+import { reducer as alert } from './alert';
+import { reducer as counter } from './counter'
+import { reducer as weatherForecasts } from './weatherForecasts'
+import { reducer as homelayout } from './homelayout'
 
 const rootReducers = {
     authentication,
@@ -12,6 +13,7 @@ const rootReducers = {
     alert,
     counter,
     weatherForecasts,
+    homelayout
 };
 
 export default rootReducers;

@@ -10,7 +10,7 @@ import configureStore from './store/configureStore';
 import App from './App';
 
 import registerServiceWorker from './registerServiceWorker';
-import { configureMockBackend, history, configureFakeBackend } from './helpers';
+import { configureMockBackend, history} from './helpers';
 
 // Create browser history to use in the Redux store
 /*
@@ -24,7 +24,6 @@ const store = configureStore(history, initialState);
 const rootElement = document.getElementById('root');
 
 configureMockBackend();
-configureFakeBackend();
 ReactDOM.render(
     <Provider store={store}>
     <ConnectedRouter history={history}>

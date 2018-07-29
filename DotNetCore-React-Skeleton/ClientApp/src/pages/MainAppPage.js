@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import HomeLayout from '../components/HomeLayout'
 import FetchData from '../components/FetchData';
 import Counter from '../components/Counter';
-import { UsersPage } from './UsersPage';
+import UsersPage from '../components/Users';
+
 const MainAppPage = ({ match }) => (
     <HomeLayout>
         <Route
@@ -38,4 +39,5 @@ const Home = () => (
  );
 
 
-export default connect()(MainAppPage);
+export default connect(
+)(MainAppPage);

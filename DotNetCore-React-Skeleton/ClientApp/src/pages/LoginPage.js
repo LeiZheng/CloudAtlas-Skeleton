@@ -1,8 +1,9 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../actions';
+import { actionCreators } from '../reducers/users';
 import { history } from '../helpers';
 
 class LoginPage extends React.Component {
@@ -11,13 +12,12 @@ class LoginPage extends React.Component {
 
         console.log('loginPage', this.props);
         // reset login status
-        this.props.dispatch(userActions.logout());
+        this.props.logout();
 
         this.state = {
             username: '',
             password: '',
             submitted: false,
-            authentication: false,
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -38,10 +38,9 @@ class LoginPage extends React.Component {
 
         this.setState({ submitted: true });
         const { username, password } = this.state;
-        const { dispatch } = this.props;
         if (username && password) {
             console.log('username',username);
-            dispatch(userActions.login(username, password));
+            this.props.login(username, password);
         }
     }
 
@@ -79,15 +78,13 @@ class LoginPage extends React.Component {
         );
     }
 }
-
+//the state here is the global state which contains all reduces.
 function mapStateToProps(state) {
     console.log('login.state', state);
-    const { loggingIn } = state.authentication || false;
+    const { loggingIn } = state.authentication;
     return {
-        state,
         loggingIn
     };
 }
 
-const connectedLoginPage = connect(mapStateToProps)(LoginPage);
-export { connectedLoginPage as LoginPage }; 
+export default connect(mapStateToProps, dispatch => bindActionCreators(actionCreators, dispatch))(LoginPage);

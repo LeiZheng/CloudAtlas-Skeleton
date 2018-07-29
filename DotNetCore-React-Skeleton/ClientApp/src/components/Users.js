@@ -1,16 +1,17 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../actions';
+import { actionCreators } from '../reducers/users';
 
 class UsersPage extends React.Component {
     componentDidMount() {
-        this.props.dispatch(userActions.getAll());
+        this.props.getAll();
     }
 
     handleDeleteUser(id) {
-        return (e) => this.props.dispatch(userActions.delete(id));
+        return (e) => this.props.delete(id);
     }
 
     render() {
@@ -45,6 +46,7 @@ class UsersPage extends React.Component {
 }
 
 function mapStateToProps(state) {
+    console.log("users", state);
     const { users, authentication } = state;
     const { user } = authentication;
     return {
@@ -53,5 +55,8 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedUserPage = connect(mapStateToProps)(UsersPage);
-export { connectedUserPage as UsersPage };
+export default connect(
+    mapStateToProps,
+    dispatch => bindActionCreators(actionCreators, dispatch)
+)(UsersPage);
+
