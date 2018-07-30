@@ -39,5 +39,4 @@ const Home = () => (
  );
 
 
-export default connect(
-)(MainAppPage);
+export default connect()(MainAppPage);

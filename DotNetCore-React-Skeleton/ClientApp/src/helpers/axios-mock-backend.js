@@ -7,7 +7,8 @@ let users = JSON.parse(localStorage.getItem('users')) || [];
 export function configureMockBackend() {
     let mock = new MockAdapter(axios, { delayResponse: 300 });   
 
-    mock.onAny().reply(config => {
+    mock.onGet(/^api/).passThrough()
+        .onAny().reply(config => {
         let { url, method } = config;
         console.log('config',config);
         // get users
@@ -118,7 +119,7 @@ export function configureMockBackend() {
 
         }
         else {
-            return [200, {}]
+            
         }
 
     });

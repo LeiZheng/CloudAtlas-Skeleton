@@ -1,6 +1,18 @@
 import { config } from '../config';
 import { authHeader } from '../helpers';
 import axios from 'axios'
+//default to login if 401 error.
+axios.interceptors.response.use(response => {
+    return response;
+}, error => {
+    if (error.response.status === 401) {
+        logout();
+        window.location.reload(true);
+    }
+    return error;
+});
+
+
 export const userService = {
     login,
     logout,
@@ -101,22 +113,4 @@ function _delete(id) {
 
     return axios.delete(`${config.apiUrl}/users/${id}`, requestOptions);
     //return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
-}
-
-function handleResponse(response) {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
-                logout();
-                window.location.reload(true);
-            }
-
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
-        }
-
-        return data;
-    });
 }

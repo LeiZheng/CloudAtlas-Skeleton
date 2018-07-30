@@ -7,6 +7,7 @@ import { actionCreators } from '../reducers/users';
 import { history } from '../helpers';
 
 class LoginPage extends React.Component {
+
     constructor(props) {
         super(props);
 
