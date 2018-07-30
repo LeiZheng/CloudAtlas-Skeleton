@@ -119,7 +119,7 @@ export function configureMockBackend() {
 
         }
         else {
-            
+            return [200, {}]
         }
 
     });
