@@ -19,9 +19,7 @@ The following features are included in this version:
   - Fetch API for REST requests
 
 ## Demo
-
-[![Demo URL](http://dotnetcore-react-skeleton20180730104349.azurewebsites.net/)]
-
+http://dotnetcore-react-skeleton20180730104349.azurewebsites.net/
 ## Setup
 
 1. Install the following:
